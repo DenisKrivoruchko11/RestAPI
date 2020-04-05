@@ -68,21 +68,11 @@ namespace RestAPI.Models
     }
 
 
-    class ConferenceWithIDModel
+    class ConferenceWithIDModel : ConferenceWithoutIDModel
     {
-        internal string _id { get; set; }
-        internal string title { get; set; }
-        internal List<string> projects { get; set; }
-        internal Location location { get; set; }
-        internal List<string> tags { get; set; }
-        internal DateTime dateStart { get; set; }
-        internal DateTime dateFinish { get; set; }
-        internal Dictionary<string, Participant> participants { get; set; }
-        internal string ytLink { get; set; }
-        internal int? attendance { get; set; }
-        internal string link { get; set; }
-        internal List<string> comments { get; set; }
-        internal string status { get; set; }
+        public string _id { get; set; }
+
+        internal ConferenceWithIDModel() { }
 
         internal ConferenceWithIDModel(
             string _id,
@@ -97,21 +87,21 @@ namespace RestAPI.Models
             int? attendance,
             string link,
             List<string> comments,
-            string status)
+            string status) : base(
+                title,
+                projects,
+                location,
+                tags,
+                dateStart,
+                dateFinish,
+                participants,
+                ytLink,
+                attendance,
+                link,
+                comments,
+                status)
         {
             this._id = _id;
-            this.title = title;
-            this.projects = projects;
-            this.location = location;
-            this.tags = tags;
-            this.dateStart = dateStart;
-            this.dateFinish = dateFinish;
-            this.participants = participants;
-            this.ytLink = ytLink;
-            this.attendance = attendance;
-            this.link = link;
-            this.comments = comments;
-            this.status = status;
         }
 
         internal ConferenceWithoutIDModel ToConferenceWithoutIDModel()

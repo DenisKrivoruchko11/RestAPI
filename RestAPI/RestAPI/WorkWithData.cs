@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
-
+using RestAPI.Common.CustomExceptions;
 namespace RestAPI
 {
     static class WorkWithData
@@ -30,22 +30,30 @@ namespace RestAPI
 
         internal static List<ConferenceWithoutIDModel> ConferenceByTitle(string title)
         {
+            var isFound = false;
             var conferences = getData(Constants.pathToFile);
             List<ConferenceWithoutIDModel> result = new List<ConferenceWithoutIDModel>();
             foreach (var conference in conferences)
             {
-                if (conference.title == title) result.Add(conference.ToConferenceWithoutIDModel());
+                if (conference.title == title)
+                {
+                    result.Add(conference.ToConferenceWithoutIDModel());
+                    isFound = true;
+                }
             }
+            if (!isFound) throw new NotFoudException("Conferences is not found", 404);
             return result;
         }
 
         internal static void DeleteConference(string id)
         {
+            var isFound = false;
             var conferences = getData(Constants.pathToFile);
             foreach (var conference in conferences)
             {
-                if (conference._id == id) { conferences.Remove(conference); break; }
+                if (conference._id == id) { conferences.Remove(conference); isFound = true; break; }
             }
+            if (!isFound) throw new NotFoudException("Conferences is not found", 404);
             string result = JsonConvert.SerializeObject(conferences);
             using (StreamWriter streamWriter = new StreamWriter(Constants.pathToFile, false))
             {
@@ -55,11 +63,13 @@ namespace RestAPI
 
         internal static void UpdateConference(ConferenceWithoutIDModel updatedConference, string id)
         {
+            var isFound = false;
             var conferences = getData(Constants.pathToFile);
             foreach (var conference in conferences)
             {
-                if (conference._id == id) { conferences.Remove(conference); break; }
+                if (conference._id == id) { conferences.Remove(conference); isFound = true; break; }
             }
+            if (!isFound) throw new NotFoudException("Conferences is not found", 404);
             conferences.Add(updatedConference.ToConferenceWithIDModel(id));
             string result = JsonConvert.SerializeObject(conferences);
             using (StreamWriter streamWriter = new StreamWriter(Constants.pathToFile, false))

@@ -3,7 +3,8 @@ using NUnit.Framework;
 using RestAPI.Controllers;
 using RestAPI.Models;
 using System.Collections.Generic;
-using System.IO;
+using RestAPI.Common.CustomExceptions;
+using System;
 
 namespace RestAPITests
 {
@@ -12,41 +13,31 @@ namespace RestAPITests
         [Test]
         public void Get()
         {
-            var result = 13;
+            var result = new List<ConferenceWithoutIDModel>();
             var testController = new ConferencesController();
-            Assert.AreEqual(result, testController.Get().Count);
+            Assert.AreEqual(result.GetType(), testController.Get().GetType());
         }
 
 
         [Test]
         public void GetByTitleWithCorrectTitle()
         {
-            var result = 13;
+            var result = new List<ConferenceWithoutIDModel>();
             var testController = new ConferencesController();
-            Assert.AreEqual(result, testController.Get().Count);
+            Assert.AreEqual(result.GetType(), testController.GetByTitle("Techfest 2019").GetType());
         }
 
         [Test]
         public void GetByTitleWithWrongTitle()
         {
-
-        }
-
-        [Test]
-        public void GetByTitleWithIncorrectData()
-        {
-
+            var result = new NotFoudException("Conferences not found", 404);
+            var testController = new ConferencesController();
+            //Assert.Throws(result, testController.GetByTitle("WrongName"));
         }
 
 
         [Test]
-        public void PostWithCorrectData()
-        {
-
-        }
-
-        [Test]
-        public void PostWithIncorrectData()
+        public void Post()
         {
 
         }
@@ -59,19 +50,7 @@ namespace RestAPITests
         }
 
         [Test]
-        public void PutWithCorrectIdAndIncorrectBody()
-        {
-
-        }
-
-        [Test]
-        public void PutWithIncorrectIdAndCorrectBody()
-        {
-
-        }
-
-        [Test]
-        public void PutWithIncorrectData()
+        public void PutWithIncorrectId()
         {
 
         }

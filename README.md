@@ -22,7 +22,7 @@
 		1. При корректном указании запроса, в качестве ответа вы получите:
 		  	List<ConferenceWithoutID>, где будет храниться вся информация обо всех конференциях;
 		2. При некорректном указании адреса запроса, вы получите исключение:
-			System.Net.WebException: 'The remote server returned an error: (404) Not Found.';	
+			System.Net.WebException: 'The remote server returned an error: (404) Not Found.';
    	2. Для получения конференций по названию отправьте http-get запрос по адресу:
 		   https://localhost:44346/api/conferences/getbytitle?title=[название конференции]
 		1. При корректном указании запроса, в качестве ответа вы получите:

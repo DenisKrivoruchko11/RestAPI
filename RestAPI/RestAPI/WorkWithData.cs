@@ -41,7 +41,7 @@ namespace RestAPI
                     isFound = true;
                 }
             }
-            if (!isFound) throw new NotFoudException("Conferences is not found", 404);
+            if (!isFound) throw new NotFoudException("Conferences are not found", 404);
             return result;
         }
 
@@ -53,7 +53,7 @@ namespace RestAPI
             {
                 if (conference._id == id) { conferences.Remove(conference); isFound = true; break; }
             }
-            if (!isFound) throw new NotFoudException("Conferences is not found", 404);
+            if (!isFound) throw new NotFoudException("Conferences are not found", 404);
             string result = JsonConvert.SerializeObject(conferences);
             using (StreamWriter streamWriter = new StreamWriter(Constants.pathToFile, false))
             {
@@ -69,7 +69,7 @@ namespace RestAPI
             {
                 if (conference._id == id) { conferences.Remove(conference); isFound = true; break; }
             }
-            if (!isFound) throw new NotFoudException("Conferences is not found", 404);
+            if (!isFound) throw new NotFoudException("Conferences are not found", 404);
             conferences.Add(updatedConference.ToConferenceWithIDModel(id));
             string result = JsonConvert.SerializeObject(conferences);
             using (StreamWriter streamWriter = new StreamWriter(Constants.pathToFile, false))
